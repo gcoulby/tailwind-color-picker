@@ -1,4 +1,8 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
+import "./assets/tailwind.css";
+import RegisterUI from "./ui/RegisterUI";
 
-createApp(App).mount('#app')
+const app = createApp(App);
+RegisterUI(app);
+app.mount("#app");
