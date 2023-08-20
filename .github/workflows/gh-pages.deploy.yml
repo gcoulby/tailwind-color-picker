@@ -1,20 +1,31 @@
-name: Deploy to Github Pages
+name: Deploy to GH Pages
+
 on:
   push:
     branches:
       - main
+
 jobs:
-  gh-pages-deploy:
-    name: Deploying to Github Pages
+  build-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Checkout 🛎️
+        uses: actions/checkout@master
         with:
-          node-version: "16"
-      - name: Install packages
-        run: npm i
-      - name: Set Creds
-        run: git config user.name "gcoulby" && git config user.email "gcoulby@googlemail.com"
-      - name: Deploy
-        run: npm run deploy
+          persist-credentials: false
+
+      - name: Install 🔧
+        run: yarn install
+
+      - name: Build 🏗️
+        run: yarn build
+        env:
+          NODE_ENV: production
+
+      - name: Deploy to GH Pages 🚀
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
