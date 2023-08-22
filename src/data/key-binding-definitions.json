@@ -1,0 +1,58 @@
+[
+  {
+    "id": "click",
+    "ctrl": false,
+    "alt": false,
+    "shift": false,
+    "prefix": ""
+  },
+  {
+    "id": "ctrl_click",
+    "ctrl": true,
+    "alt": false,
+    "shift": false,
+    "prefix": "bg-"
+  },
+  {
+    "id": "alt_click",
+    "ctrl": false,
+    "alt": true,
+    "shift": false,
+    "prefix": "text-"
+  },
+  {
+    "id": "shift_click",
+    "ctrl": false,
+    "alt": false,
+    "shift": true,
+    "prefix": "border-"
+  },
+  {
+    "id": "ctrl_alt_click",
+    "ctrl": true,
+    "alt": true,
+    "shift": false,
+    "prefix": "dark:bg-"
+  },
+  {
+    "id": "ctrl_shift_click",
+    "ctrl": true,
+    "alt": false,
+    "shift": true,
+    "prefix": "dark:text-"
+  },
+  {
+    "id": "alt_shift_click",
+    "ctrl": false,
+    "alt": true,
+    "shift": true,
+    "prefix": "dark:border-"
+  },
+  {
+    "id": "ctrl_alt_shift_click",
+    "ctrl": true,
+    "alt": true,
+    "shift": true,
+    "prefix": "!hex"
+  }
+]

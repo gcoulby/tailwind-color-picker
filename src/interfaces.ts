@@ -3,7 +3,7 @@ export interface ColorValue {
   hex: string;
 }
 
-export interface ColorPalette {
+export interface IColorPalette {
   name: string;
   colors: ColorValue[];
 }
