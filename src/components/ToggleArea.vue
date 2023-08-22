@@ -3,10 +3,10 @@
     <ButtonControl class="w-64 mb-4" @click="toggleControls(ToggleAreaType.KeyBindings)">
       {{ showBindings ? "Hide" : "Show" }} Controls
     </ButtonControl>
-    <ButtonControl class="w-64 ml-4" @click="toggleControls(ToggleAreaType.PaletteCreator)" v-if="showCustomPalettes">
+    <ButtonControl class="w-64 md:ml-4 mb-4" @click="toggleControls(ToggleAreaType.PaletteCreator)" v-if="showCustomPalettes">
       {{ showPaletteCreator ? "Hide" : "Show" }} Palette Creator
     </ButtonControl>
-    <ButtonControl class="w-64 ml-4" @click="toggleControls(ToggleAreaType.CodeExporter)" v-if="showCustomPalettes">
+    <ButtonControl class="w-64 md:ml-4 mb-4" @click="toggleControls(ToggleAreaType.CodeExporter)" v-if="showCustomPalettes">
       {{ showCodeExporter ? "Hide" : "Show" }} Code Exporter
     </ButtonControl>
 
