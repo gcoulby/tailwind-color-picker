@@ -35,7 +35,7 @@
             type="number"
             min="0"
             max="360"
-            class="h-4 w-20 mx-auto ml-2 p-3 border border-stone-800 bg-white dark:bg-stone-950 text-gray-800 dark:text-white rounded-md focus:outline-none "
+            class="h-4 w-20 mx-auto ml-2 p-3 border border-stone-800 bg-white dark:bg-stone-950 text-gray-800 dark:text-white rounded-md focus:outline-none"
             id="myRangeNumber"
             v-model="customHue"
             @input="colorChange()"
