@@ -4,6 +4,11 @@
       <div class="text-sm font-semibold text-slate-900 dark:text-slate-200 2xl:col-end-1 2xl:pt-2.5">
         <label for="name" class="w-40 inline-block text-slate-300">Name:</label>
         <FormControl id="name" label="Name" :value="colorPalette.name" @input="changePaletteName" placeholder="Palette Name" class="w-60" />
+        
+        <!-- <div class="my-4 block">
+        <label for="hex" class="w-40 inline-block text-slate-300 ">Hex:</label>
+        <FormControl id="hex" label="Hex" :value="customHex" @input="changePaletteHex" placeholder="Hex" class="w-60 uppercase" />
+        </div> -->
         <div class="my-6 block">
           <label for="myRange" class="w-40 inline-block text-slate-300">Hue:</label>
           <input
@@ -42,7 +47,7 @@
         </div>
       </div>
       <div class="grid grid-col gap-x-2 gap-y-8 sm:grid-cols-1 mt-4">
-        <ColorPalette :colorPalette="colorPalette" />
+        <ColorPalette :colorPalette="colorPalette" :environment="environment"/>
       </div>
       <ButtonControl class="mt-6 mb-4" @click="addCustomColorPalette({ ...colorPalette })"
         ><span class="font-bold">📥</span> Add Palette</ButtonControl
@@ -65,10 +70,16 @@ export default defineComponent({
       type: Function,
       required: true,
     },
+    environment: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
   },
   setup(props) {
     const customHue = ref(180);
     const customSaturation = ref(100);
+    const customHex = ref("00ebeb");
     const showPaletteCreator = ref(false);
     const colorPalette = ref<IColorPalette>({
       name: "custom",
@@ -143,6 +154,9 @@ export default defineComponent({
       } else {
         const d = max - min;
         s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        if(s < 0)
+          s = ((s * -1) - 1) * 100;
+        
         switch (max) {
           case r:
             h = (g - b) / d + (g < b ? 6 : 0);
@@ -159,7 +173,9 @@ export default defineComponent({
       return [h, s, l];
     };
 
-    const colorChange = () => {
+    const colorChange = (hslChange = true) => {
+      if(hslChange)
+        customHex.value = hslToHex(customHue.value, customSaturation.value, 50).replace("#", "");
       let newColorPallete = { ...colorPalette.value };
       newColorPallete.colors = newColorPallete.colors.map((color, i) => {
         color.hex = hslToHex(customHue.value, customSaturation.value, shades[i]);
@@ -170,12 +186,32 @@ export default defineComponent({
 
     colorChange();
 
+    const changePaletteHex = (e: Event) => {
+
+      const target = e.target as HTMLInputElement;
+      
+      customHex.value = target.value;
+      customHex.value = customHex.value.replace("#", "");
+      const [hue, saturation, lightness] = hexToHsl(customHex.value);
+      
+      console.log(hue, saturation, lightness)
+      if(hue && saturation){
+        customHue.value = hue * 360;
+        customSaturation.value = saturation * 100;
+        lightness === 50 ? colorChange() : null;
+      }
+
+      colorChange(false);
+    };
+
     return {
       customHue,
       customSaturation,
+      customHex,
       colorChange,
       colorPalette,
       changePaletteName,
+      changePaletteHex,
       showPaletteCreator,
       toggleControls,
     };

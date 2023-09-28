@@ -1,12 +1,12 @@
 <template>
   <div class="mb-4">
-    <KeyIcon keyName="ctrl" v-if="combo.ctrl" />
+    <KeyIcon keyName="ctrl" v-if="combo.ctrl" :environment="environment"/>
     <span class="inline-block mx-2" v-if="combo.ctrl">+</span>
-    <KeyIcon keyName="shift" v-if="combo.shift" />
+    <KeyIcon keyName="shift" v-if="combo.shift" :environment="environment"/>
     <span class="inline-block mx-2" v-if="combo.shift">+</span>
-    <KeyIcon keyName="alt" v-if="combo.alt" />
+    <KeyIcon keyName="alt" v-if="combo.alt" :environment="environment"/>
     <span class="inline-block mx-2" v-if="combo.alt">+</span>
-    <KeyIcon keyName="click" />
+    <KeyIcon keyName="click" :environment="environment"/>
   </div>
 </template>
 
@@ -21,6 +21,11 @@ export default defineComponent({
     combo: {
       type: Object as () => KeyCombination,
       required: true,
+    },
+    environment: {
+      type: Boolean,
+      required: true,
+      default: true,
     },
   },
   setup() {

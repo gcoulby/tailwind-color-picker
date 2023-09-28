@@ -26,7 +26,7 @@
             v-if="deleteCustomColorPalette"
             class="w-full bg-red-700 dark:bg-red-700 hover:bg-red-600 hover:dark:bg-red-600"
             @click="deleteCustomColorPalette(colorPalette)"
-            ><span class="font-bold">X</span> Delete</ButtonControl
+            ><span class="font-bold">X</span></ButtonControl
           >
         </div>
       </div>
@@ -57,13 +57,20 @@ export default defineComponent({
       type: Function,
       required: false,
     },
+    environment: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
   },
   setup(props) {
     const copied = ref(false);
     const copyColor = (e: MouseEvent, color: ColorValue) => {
+      console.log("copyColor", e, color, props.environment)
       e.preventDefault();
       e.stopPropagation();
-      let ctrl = e.ctrlKey;
+      console.log("keys", e)
+      let ctrl = props.environment ? e.metaKey : e.ctrlKey;
       let shift = e.shiftKey;
       let alt = e.altKey;
       let keyCombos = props.keyCombos;
@@ -73,6 +80,7 @@ export default defineComponent({
       if (!combo) return;
       let txt = combo.prefix !== "!hex" ? `${combo.prefix}${props.colorPalette.name}-${color.shade}` : color.hex;
       navigator.clipboard.writeText(txt);
+      console.log("copied", txt);
       copied.value = true;
       setTimeout(() => {
         copied.value = false;

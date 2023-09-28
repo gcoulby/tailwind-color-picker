@@ -12,6 +12,7 @@
         :keyCombos="combos"
         :showDelete="showDelete"
         :deleteCustomColorPalette="deleteCustomColorPalette"
+        :environment="environment"
       />
     </div>
   </div>
@@ -40,6 +41,11 @@ export default defineComponent({
     deleteCustomColorPalette: {
       type: Function,
       required: false,
+    },
+    environment: {
+      type: Boolean,
+      required: true,
+      default: true,
     },
   },
   components: {

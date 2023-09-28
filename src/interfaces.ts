@@ -14,4 +14,5 @@ export interface KeyCombination {
   alt: boolean;
   shift: boolean;
   prefix: string;
+  isMacOS: boolean;
 }

@@ -2,10 +2,10 @@
   <PageTemplate>
     <ToggleArea :showCustomPalettes="showCustomPalettes">
       <template v-slot:key_bindings>
-        <KeyBindings :combos="combos" :updatePrefix="updatePrefix" />
+        <KeyBindings :combos="combos" :updatePrefix="updatePrefix" :environment="isMacOS" :toggleEnvironment="toggleIsMacOS"/>
       </template>
       <template v-slot:palette_creator>
-        <PaletteCreator :addCustomColorPalette="addCustomColorPalette" />
+        <PaletteCreator :addCustomColorPalette="addCustomColorPalette" :environment="isMacOS"/>
       </template>
       <template v-slot:code_exporter>
         <CodeExporter :colorPalettes="customColorPalettes" />
@@ -19,13 +19,14 @@
       ></div>
       <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Show Custom Palette</span>
     </label>
-    <ColorPaletteList :colorPalettes="colorPalettes" :combos="combos" v-if="!showCustomPalettes" />
+    <ColorPaletteList :colorPalettes="colorPalettes" :combos="combos" v-if="!showCustomPalettes" :environment="isMacOS"/>
     <div v-else>
       <ColorPaletteList
         :colorPalettes="customColorPalettes"
         :combos="combos"
         :showDelete="true"
         :deleteCustomColorPalette="deleteCustomColorPalette"
+        :environment="isMacOS"
       />
     </div>
   </PageTemplate>
@@ -60,6 +61,7 @@ export default defineComponent({
     const toggleControls = () => {
       showControls.value = !showControls.value;
     };
+    const isMacOS = ref(true);
 
     const combos = ref(KeyBindingDefinitions as KeyCombination[]);
 
@@ -76,6 +78,12 @@ export default defineComponent({
     const toggleShowCustomPalette = (event: Event) => {
       const target = event.target as HTMLInputElement;
       showCustomPalettes.value = target.checked;
+    };
+
+    const toggleIsMacOS = (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      isMacOS.value = target.checked;
+      localStorage.setItem("tailwind_color_picker_environment", isMacOS.value ? "mac" : "windows");
     };
 
     const colorPalettes = ref(ColorPaletteDefinitions);
@@ -107,11 +115,16 @@ export default defineComponent({
 
     const savedCombos = localStorage.getItem("tailwind_color_picker_combos");
     const savedCustomPalettes = localStorage.getItem("tailwind_color_picker_custom_palettes");
+    const savedEnvironment = localStorage.getItem("tailwind_color_picker_environment");
+
     if (savedCombos) {
       combos.value = JSON.parse(savedCombos);
     }
     if (savedCustomPalettes) {
       customColorPalettes.value = JSON.parse(savedCustomPalettes);
+    }
+    if (savedEnvironment) {
+      isMacOS.value = savedEnvironment === "mac";
     }
 
     return {
@@ -125,6 +138,8 @@ export default defineComponent({
       customColorPalettes,
       addCustomColorPalette,
       deleteCustomColorPalette,
+      isMacOS,
+      toggleIsMacOS
     };
   },
 });
