@@ -31,6 +31,16 @@
             );`"
             @input="colorChange()"
           />
+          <input 
+            type="number"
+            min="0"
+            max="360"
+            class="h-4 w-20 mx-auto ml-2 p-3 border border-stone-800 bg-white dark:bg-stone-950 text-gray-800 dark:text-white rounded-md focus:outline-none "
+            id="myRangeNumber"
+            v-model="customHue"
+            @input="colorChange()"
+          />
+          
         </div>
         <div class="my-6 block">
           <label for="myRange" class="w-40 inline-block text-slate-300">Saturation:</label>
@@ -42,6 +52,15 @@
             id="myRange"
             v-model="customSaturation"
             :style="`appearance: none; background: linear-gradient(to right, hsl(0, 0%, 100%), hsl(${customHue}, ${customSaturation}%, 50%))`"
+            @input="colorChange()"
+          />
+          <input 
+            type="number"
+            min="0"
+            max="100"
+            class="h-4 w-20 mx-auto ml-2 p-3 border border-stone-800 bg-white dark:bg-stone-950 text-gray-800 dark:text-white rounded-md focus:outline-none "
+            id="myRangeNumber"
+            v-model="customSaturation"
             @input="colorChange()"
           />
         </div>
